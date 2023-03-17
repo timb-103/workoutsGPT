@@ -2,13 +2,13 @@
   <div class="wrapper">
     <!-- Nav -->
     <nav class="center">
-      <h2>WorkoutsGPT</h2>
+      <h2>💪 WorkoutsGPT</h2>
     </nav>
 
     <!-- Header -->
     <header class="center">
-      <h1>Create workouts in seconds with chatGPT</h1>
-      <p>Simply enter a few details and chatGPT will generate the perfect workout for your next gym session, free.</p>
+      <h1>Create Workouts in Seconds with chatGPT</h1>
+      <p>Simply enter your workout length & muscle groups to generate the perfect workout for your next gym session, free.</p>
     </header>
 
     <!-- Generator -->
@@ -65,7 +65,7 @@
   </div>
 </template>
 <script setup lang="ts">
-useHead({ title: 'WorksoutsGPT - Create workouts in seconds with chatGPT' })
+useHead({ title: 'WorksoutsGPT - Create Workouts in Seconds with chatGPT' })
 
 const loading = ref(false)
 
@@ -110,17 +110,10 @@ async function generate() {
 }
 </script>
 <style scoped>
-/* Nav */
-nav {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
 /* Header */
 header {
   max-width: 600px;
-  margin: auto;
+  margin: 4em auto auto auto;
 }
 
 /* Generator */
