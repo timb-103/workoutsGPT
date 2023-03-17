@@ -1,61 +1,84 @@
 <template>
   <div class="wrapper">
-    <!-- Nav -->
-    <nav>
-      <h2>WorkoutsGPT</h2>
-      <a>About</a>
-    </nav>
+    <div v-if="showAbout" class="about">
+      <header class="center">
+        <p>
+          WorkoutsGPT was a fun little project built in an afternoon by <a href="https://twitter.com/Timb03" target="_blank">Tim Bennetto</a>. It uses
+          the chatGPT API to generate custom workouts depending on your settings. It's 100% free to use.
+        </p>
+        <button class="button" data-type="primary" @click="toggleAbout()">Close</button>
+      </header>
+    </div>
 
-    <!-- Header -->
-    <header class="center">
-      <h1>Create a workout in seconds with chatGPT.</h1>
-      <p>Generate the perfect workout for your next gym session.</p>
-    </header>
+    <div v-if="!showAbout">
+      <!-- Nav -->
+      <nav>
+        <h2>WorkoutsGPT</h2>
+        <a @click.prevent="toggleAbout()">About</a>
+      </nav>
 
-    <!-- Generator -->
-    <div class="generator">
-      <!-- Length (minutes) -->
-      <div>
-        <label><strong>1. Choose a workout length</strong></label>
-        <select v-model="length">
-          <option v-for="(item, index) in lengths" :key="index" :value="item" :selected="item === length">{{ item }} minutes</option>
-        </select>
-      </div>
+      <!-- Header -->
+      <header class="center">
+        <h1>Create workouts in seconds with chatGPT</h1>
+        <p>Simply enter a few details and chatGPT will generate the perfect workout for your next gym session, free.</p>
+      </header>
 
-      <!-- Muscle Groups -->
-      <div>
-        <label><strong>2. Choose which muscle groups to workout</strong></label>
-        <div class="muscle-groups">
-          <div
-            v-for="(item, index) in muscleGroups"
-            :key="index"
-            class="muscle-group"
-            :class="{ 'muscle-group-selected': muscleGroupsSelected.includes(item) }"
-            @click="toggleMuscleGroup(item)"
-          >
-            <span class="muscle-group-check">✔️</span>
-            {{ item }}
+      <!-- Generator -->
+      <div class="generator">
+        <!-- Length (minutes) -->
+        <div>
+          <label><strong>1. Choose a workout length</strong></label>
+          <select v-model="length">
+            <option v-for="(item, index) in lengths" :key="index" :value="item" :selected="item === length">{{ item }} minutes</option>
+          </select>
+        </div>
+
+        <!-- Muscle Groups -->
+        <div>
+          <label><strong>2. Choose which muscle groups to workout</strong></label>
+          <div class="muscle-groups">
+            <div
+              v-for="(item, index) in muscleGroups"
+              :key="index"
+              class="muscle-group"
+              :class="{ 'muscle-group-selected': muscleGroupsSelected.includes(item) }"
+              @click="toggleMuscleGroup(item)"
+            >
+              <span class="muscle-group-check">✔️</span>
+              {{ item }}
+            </div>
           </div>
         </div>
-      </div>
 
-      <!-- Generate Button -->
-      <div>
-        <button class="button generate-button" data-type="primary" @click="generate()" :disabled="loading">
-          <span v-if="!loading">Generate Workout</span><span v-else>Loading...</span>
-        </button>
-      </div>
+        <!-- Generate Button -->
+        <div>
+          <button class="button generate-button" data-type="primary" @click="generate()" :disabled="loading">
+            <span v-if="!loading">Generate Workout</span><span v-else>Loading...</span>
+          </button>
+        </div>
 
-      <!-- Workout -->
-      <div>
-        <div v-if="workout" class="workout">
-          <p>{{ workout }}</p>
+        <!-- Workout -->
+        <div>
+          <div v-if="workout" class="workout">
+            <label><strong>Here's your workout:</strong></label>
+            <p>{{ workout }}</p>
+          </div>
+        </div>
+
+        <!-- Made By -->
+        <div class="made-by center">
+          <p>
+            Made by <a href="https://twitter.com/Timb03" target="_blank">@timb03</a> with
+            <a href="https://chat.openai.com/chat" target="_blank">chatGPT</a> & Vercel
+          </p>
         </div>
       </div>
     </div>
   </div>
 </template>
 <script setup lang="ts">
+useHead({ title: 'WorksoutGPT' })
+
 const loading = ref(false)
 
 // workout length
@@ -64,7 +87,7 @@ const lengths = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60]
 
 // muscle groups
 const muscleGroups = ['biceps', 'back', 'abs', 'legs', 'shoulders', 'chest']
-const muscleGroupsSelected = ref([] as String[])
+const muscleGroupsSelected = ref(['biceps'])
 
 function toggleMuscleGroup(value: string) {
   const index = muscleGroupsSelected.value.findIndex((v) => v === value)
@@ -97,6 +120,12 @@ async function generate() {
   // end loading
   loading.value = false
 }
+
+// about section
+const showAbout = ref(false)
+function toggleAbout() {
+  showAbout.value = !showAbout.value
+}
 </script>
 <style scoped>
 /* Nav */
@@ -108,7 +137,7 @@ nav {
 
 /* Header */
 header {
-  max-width: 1000px;
+  max-width: 600px;
   margin: auto;
 }
 
@@ -172,5 +201,13 @@ header {
   padding: 1.4em;
   border-radius: 4px;
   background: #fff;
+}
+
+/* About */
+.about {
+  margin-top: 4em;
+}
+.about > header > button {
+  margin-top: 2em;
 }
 </style>
