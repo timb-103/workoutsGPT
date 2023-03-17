@@ -69,7 +69,7 @@
         <div class="made-by center">
           <p>
             Made by <a href="https://twitter.com/Timb03" target="_blank">@timb03</a> with
-            <a href="https://chat.openai.com/chat" target="_blank">chatGPT</a> & Vercel
+            <a href="https://chat.openai.com/chat" target="_blank">chatGPT</a> & <a href="https://vercel.com" target="_blank">Vercel</a>
           </p>
         </div>
       </div>
