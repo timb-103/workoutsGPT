@@ -6,10 +6,10 @@
 export default defineEventHandler(async (event) => {
   try {
     const body = await readBody(event)
-    const { muscleGroups, length } = body
+    const { muscleGroups, length, location } = body
 
     // create the prompt
-    let prompt = `Create a gym workout that goes for ${length} minutes and works out the following muscle groups: ${muscleGroups}. Estimate how long each section will take roughly.`
+    let prompt = `Create a ${location} workout that goes for ${length} minutes and works out the following muscle groups: ${muscleGroups}. Estimate how long each section will take roughly.`
 
     // send to openai
     const result = (await $fetch('https://api.openai.com/v1/chat/completions', {

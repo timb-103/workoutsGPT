@@ -21,18 +21,52 @@
         </select>
       </div>
 
+      <!-- Location  -->
+      <div>
+        <label><strong>2. Where are you working out?</strong></label>
+        <div class="options">
+          <div
+            v-for="(item, index) in locations"
+            :key="index"
+            class="option"
+            :class="{ 'option-selected': location === item }"
+            @click="toggleLocation(item)"
+          >
+            <span class="option-check">✔️</span>
+            {{ item }}
+          </div>
+        </div>
+      </div>
+
       <!-- Muscle Groups -->
       <div>
-        <label><strong>2. Choose which muscle groups to workout</strong></label>
-        <div class="muscle-groups">
+        <label><strong>3. Choose which muscle groups to workout</strong></label>
+        <div class="options">
           <div
             v-for="(item, index) in muscleGroups"
             :key="index"
-            class="muscle-group"
-            :class="{ 'muscle-group-selected': muscleGroupsSelected.includes(item) }"
+            class="option"
+            :class="{ 'option-selected': muscleGroupsSelected.includes(item) }"
             @click="toggleMuscleGroup(item)"
           >
-            <span class="muscle-group-check">✔️</span>
+            <span class="option-check">✔️</span>
+            {{ item }}
+          </div>
+        </div>
+
+        <br />
+
+        <!-- Advanced Muscle Groups -->
+        <label>..or choose more specific muscles</label>
+        <div class="options">
+          <div
+            v-for="(item, index) in muscleGroupsAdvanced"
+            :key="index"
+            class="option"
+            :class="{ 'option-selected': muscleGroupsSelected.includes(item) }"
+            @click="toggleMuscleGroup(item)"
+          >
+            <span class="option-check">✔️</span>
             {{ item }}
           </div>
         </div>
@@ -69,13 +103,21 @@ useHead({ title: 'WorksoutsGPT - Create Workouts in Seconds with chatGPT' })
 
 const loading = ref(false)
 
+// locations
+const locations = ref(['gym', 'home'])
+const location = ref('gym')
+function toggleLocation(value: string) {
+  location.value = value
+}
+
 // workout length
 const length = ref(30)
 const lengths = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60]
 
 // muscle groups
-const muscleGroups = ['biceps', 'back', 'abs', 'legs', 'shoulders', 'chest']
-const muscleGroupsSelected = ref(['biceps'])
+const muscleGroups = ['biceps', 'back', 'abs', 'legs', 'shoulders', 'chest', 'quadriceps', 'hamstrings', 'calves', 'triceps', 'forearms']
+const muscleGroupsAdvanced = ['glutes', 'transverse abs', 'psoas']
+const muscleGroupsSelected = ref(['biceps', 'transverse abs', 'psoas'])
 
 function toggleMuscleGroup(value: string) {
   const index = muscleGroupsSelected.value.findIndex((v) => v === value)
@@ -97,7 +139,10 @@ async function generate() {
 
   try {
     // generate the workout
-    const data = await $fetch('/api/generate', { method: 'post', body: { length: length.value, muscleGroups: muscleGroupsSelected.value } })
+    const data = await $fetch('/api/generate', {
+      method: 'post',
+      body: { length: length.value, muscleGroups: muscleGroupsSelected.value, location: location.value },
+    })
 
     // set the results
     workout.value = data
@@ -125,26 +170,26 @@ header {
 }
 
 /* Muscle Groups */
-.muscle-groups {
+.options {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
 }
-.muscle-group {
+.option {
   border: 1px solid var(--grey);
   border-radius: 6px;
   background: #fff;
   padding: 0.7em 1.4em;
   position: relative;
 }
-.muscle-group:hover {
+.option:hover {
   background: #fafafa;
   cursor: pointer;
 }
-.muscle-group-selected {
+.option-selected {
   border-color: var(--black);
 }
-.muscle-group-check {
+.option-check {
   display: none;
   position: absolute;
   top: -4px;
@@ -158,7 +203,7 @@ header {
   border: 1px solid var(--black);
   font-size: 11px;
 }
-.muscle-group-selected > .muscle-group-check {
+.option-selected > .option-check {
   display: flex;
 }
 
