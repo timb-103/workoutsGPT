@@ -1,4 +1,4 @@
-# [workoutGPT.com](https://workoutsgpt.io)
+# [workoutsGPT.com](https://workoutsgpt.com)
 
 Create Workouts in Seconds with chatGPT
 
