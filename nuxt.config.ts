@@ -10,8 +10,9 @@ export default defineNuxtConfig({
       },
       meta: [
         { hid: 'title', name: 'title', content: 'WorkoutsGPT' },
-        { hid: 'description', name: 'description', content: 'WorkoutsGPT' },
-        { hid: 'og:title', property: 'og:title', content: 'Create a workout in seconds with chatGPT.' },
+        { hid: 'description', name: 'description', content: 'Create a workout in seconds with chatGPT.' },
+        { hid: 'og:title', property: 'og:title', content: 'WorkoutsGPT.' },
+        { hid: 'og:description', property: 'og:title', content: 'Create a workout in seconds with chatGPT.' },
       ],
       script: [
         // plausible
