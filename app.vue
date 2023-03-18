@@ -147,6 +147,11 @@ async function generate() {
   workout.value = ''
 
   try {
+    // add plausible event
+    if (window.plausible) {
+      window.plausible('workoutGenerated')
+    }
+
     // generate the workout
     const data = await $fetch('/api/generate', {
       method: 'post',
