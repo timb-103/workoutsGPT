@@ -117,7 +117,7 @@ const lengths = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60]
 // muscle groups
 const muscleGroups = ['biceps', 'back', 'abs', 'legs', 'shoulders', 'chest', 'quadriceps', 'hamstrings', 'calves', 'triceps', 'forearms']
 const muscleGroupsAdvanced = ['glutes', 'transverse abs', 'psoas']
-const muscleGroupsSelected = ref(['biceps', 'transverse abs', 'psoas'])
+const muscleGroupsSelected = ref(['biceps'])
 
 function toggleMuscleGroup(value: string) {
   const index = muscleGroupsSelected.value.findIndex((v) => v === value)
